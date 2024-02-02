@@ -25,7 +25,7 @@ OXAsim <- m_actual_intr %>%
 SAMsim <- m_actual_intr %>%
   sim_validate(org_fullname,
                "(Escherichia coli|Klebsiella pneumoniae|Proteus mirabilis)",
-               SAM,"SAM",20,20,SAM_simul,"Ampicillin-sulbactam")
+               SAM,"SAM",20,50,SAM_simul,"Ampicillin-sulbactam")
 
 #Piperacillin-tazobactam (BEAR)
 TZPsim <- m_actual_intr %>%

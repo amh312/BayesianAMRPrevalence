@@ -33,16 +33,6 @@ library("dichromat")
 library("RColorBrewer")
 setwd("/Users/alexhoward/Documents/GitHub/MIMIC-IV")
 
-micro <- read_in("microbiologyevents3.csv")
-m_actual <- read_in("m_actual.csv")
-m_actual_intr <- read_in("m_actual_intr.csv")
-sims <- read_in("sims.csv")
-norms <- read_in("norms.csv")
-valid <- read_in("final_valid.csv")
-valid_norms <- read_in("final_valid_norms.csv")
-sim_missings <- read_in("sim_missings.csv")
-norm_missings <- read_in("norm_missings.csv")
-
 #####FUNCTIONS#################################################################
 
 #Read-in and cleaning
@@ -291,14 +281,30 @@ res_sim <- function(df,col,condition,col2,condition2,antibiotic,alpha_prior,beta
       post_samples <- sample( p , prob=posterior , size=1e4 , replace=TRUE )
       post_samples <- tibble(Probability = post_samples,Distribution=rep("Posterior",length(post_samples)))
       
-      post_df <- rbind(prior_samples,likelihood_samples,post_samples)
-      post_df$Distribution <- factor(post_df$Distribution, levels=c("Prior","Likelihood","Posterior"))
-      
       #Prior, likelihood and posterior density plot
       
-      print(ggplot(post_df,aes(x=Probability,color=Distribution)) +
-              geom_density() +
-              labs(title=glue("{condition}{extra}: {antimicrobial_name}")))
+      prior_2 <- prior/max(prior)
+      prior_plot <- tibble(Density = prior_2,Distribution=rep("Prior",length(prior_2)),Probability=p)
+      
+      likelihood_2 <- likelihood/max(likelihood)
+      likelihood_plot <- tibble(Density = likelihood_2,Distribution=rep("Likelihood",length(likelihood_2)),Probability=p)
+      
+      posterior_2 <- posterior/max(posterior)
+      post_plot <- tibble(Density = posterior_2,Distribution=rep("Posterior",length(posterior_2)),Probability=p)
+      
+      post_df <- rbind(prior_plot,likelihood_plot,post_plot)
+      post_df$Distribution <- factor(post_df$Distribution, levels=c("Prior","Likelihood","Posterior"))
+      
+      print(ggplot(post_df,aes(y=Density,x=Probability,group=Distribution,fill=Distribution,color=Distribution)) +
+        geom_line() +
+        theme(axis.title.y=element_blank(),
+              axis.text.y=element_blank(),
+              axis.ticks.y=element_blank()) +
+        geom_line(size=.5) +
+        geom_ribbon(data=subset(post_df,Probability>0 & Probability<1),aes(x=Probability,ymax=Density),ymin=0,alpha=0.3) +
+        scale_fill_manual(name='', values=c("Prior" = "red", "Likelihood" = "green4","Posterior"="blue")) +
+        guides(color = FALSE) +
+        labs(title=glue("Probability: {antimicrobial_name} resistance in {condition}{extra}")))
       
       N_star <- nrow(df %>%
                        dplyr::filter(grepl(condition,!!col) &
@@ -314,8 +320,8 @@ res_sim <- function(df,col,condition,col2,condition2,antibiotic,alpha_prior,beta
       
       
       post_predictive <- BetaBinom(1:N_star)
-      plot(1:N_star,BetaBinom(1:N_star),type="h",col="darkblue",xlab="Predicted number of resistant isolates",ylab="Probability density",
-           main = glue("Posterior predictive: {condition}{extra}: {antimicrobial_name},N={N_star}"),cex.axis= 1.5,cex.lab=1.5,lwd=4)
+      plot(1:N_star,BetaBinom(1:N_star),type="h",col="darkblue",xlab="Estimated prevalence of resistance",ylab="Probability density",
+           main = glue("Estimated prevalence of {antimicrobial_name} resistance in {N_star} {condition}{extra} isolates"),cex.axis= 1.5,cex.lab=1.5,lwd=4)
       
       samples <- sample( p , prob=posterior , size=1e4 , replace=TRUE )
       
