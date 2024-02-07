@@ -490,7 +490,7 @@ norm_sim <- function(df,col,condition,col2,condition2,antibiotic,alpha_prior,bet
     HPDI_AMR_rate <- data.frame(cbind(n_measured,n_simulated,AMR_rate,CIs))
     rownames(HPDI_AMR_rate) <- glue("{condition}_{antimicrobial_name}{extra}")
     
-    assign(glue("{condition}_{antimicrobial_name}{extra}_norms_"),HPDI_AMR_rate,envir = .GlobalEnv)
+    assign(glue("{condition}_{antimicrobial_name}{extra}"),HPDI_AMR_rate,envir = .GlobalEnv)
     
     target <- df %>% dplyr::filter(grepl(condition,!!col) &
                                      grepl(condition2,!!col2)) %>% 
@@ -506,7 +506,7 @@ norm_sim <- function(df,col,condition,col2,condition2,antibiotic,alpha_prior,bet
     
     sample_df <- tibble(cbind(tibble(AMR_rate=AMR_rate),tibble(org_name=rep(glue("{condition}"),length(AMR_rate)))),CIs)
     
-    assign(glue("{condition}_{antimicrobial_name}{extra}_norms_df"),sample_df,envir = .GlobalEnv)
+    assign(glue("{condition}_{antimicrobial_name}{extra}df"),sample_df,envir = .GlobalEnv)
     
     df %>% select(-isolate_id)
     
@@ -604,20 +604,6 @@ PEN_normal <- function(df) {
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
   
-  PEN_norms_plot <- ggplot(PEN_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = PEN_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(PEN_norms_plot)
-  
   assign("PEN_norms_summary",PEN_norms_,envir = .GlobalEnv)
   
   
@@ -699,20 +685,6 @@ AMP_normal <- function(df) {
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
   
-  AMP_norms_plot <- ggplot(AMP_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = AMP_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(AMP_norms_plot)
-  
   assign("AMP_norms_summary",AMP_norms_,envir = .GlobalEnv)
   
   df
@@ -775,20 +747,6 @@ OXA_normal <- function(df) {
   OXA_norms_df$org_name <- factor(OXA_norms_df$org_name, levels = OXA_norms_df %>%
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
-  
-  OXA_norms_plot <- ggplot(OXA_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = OXA_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(OXA_norms_plot)
   
   assign("OXA_norms_summary",OXA_norms_summary,envir = .GlobalEnv)
   
@@ -862,20 +820,6 @@ SAM_normal <- function(df) {
   SAM_norms_df$org_name <- factor(SAM_norms_df$org_name, levels = SAM_norms_df %>%
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
-  
-  SAM_norms_plot <- ggplot(SAM_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = SAM_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(SAM_norms_plot)
   
   assign("SAM_norms_summary",SAM_norms_summary,envir = .GlobalEnv)
   
@@ -955,20 +899,6 @@ TZP_normal <- function(df) {
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
   
-  TZP_norms_plot <- ggplot(TZP_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = TZP_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(TZP_norms_plot)
-  
   assign("TZP_norms_summary",TZP_norms_summary,envir = .GlobalEnv)
   
   df
@@ -1040,24 +970,56 @@ CZO_normal <- function(df) {
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
   
-  CZO_norms_plot <- ggplot(CZO_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = CZO_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(CZO_norms_plot)
-  
   assign("CZO_norms_summary",CZO_norms_summary,envir = .GlobalEnv)
   
   df
-}
+}#Resource dotplot
+
+numbsims <- data.frame(cbind(numbsims,rep("BEAR",nrow(numbnorms))))
+numbnorms <- data.frame(cbind(numbnorms,rep("EOP",nrow(numbnorms))))
+numbsims[,2] <- as.numeric(numbsims[,2])
+numbnorms[,2] <- as.numeric(numbnorms[,2])
+
+colnames(numbsims) <- c("Antimicrobial","n","Estimator")
+colnames(numbnorms) <- c("Antimicrobial","n","Estimator")
+numbs <- data.frame(rbind(numbsims,numbnorms))
+
+numbs$Antimicrobial <- factor(numbs$Antimicrobial, levels = numbs %>% 
+                                arrange(desc(n)) %>%
+                                distinct(Antimicrobial) %>% unlist()) %>% 
+  fct_rev()
+
+numbdiffs <- data.frame(numbsims[,2]-numbnorms[,2])
+colnames(numbdiffs) <- c("n2")
+numbdiffs$Antimicrobial <- numbsims$ab_name
+numbdiffs <- numbdiffs %>% mutate(model = case_when(
+  n2>0 ~ "BEAR",
+  n2<0 ~ "EOP"
+))
+
+numbdiffs$n2 <- abs(numbdiffs$n2)
+numbdiffs$Antimicrobial <- numbsims$Antimicrobial
+numbdiffs$BEAR <- numbsims$n
+numbdiffs$EOP <- numbnorms$n
+numbdiffs <- numbdiffs %>% mutate(n = case_when(
+  model=="BEAR"~BEAR+5,
+  model=="EOP"~EOP+5
+))
+
+resource_plot <- ggplot(numbs, aes(x=Antimicrobial,y=n)) +
+  geom_line(aes(group=Antimicrobial),alpha=0.5)+
+  geom_point(aes(color=Estimator),size=4) +
+  coord_flip() +
+  ggtitle(glue("Minimum number of observed antimicrobial susceptibility results per pathogen required to avoid extreme estimation errors"))+
+  xlab("Antimicrobial agent") +
+  ylab("Number of observed results required") +
+  ylim(0,110) +
+  scale_color_manual(values=c("blue","green3"))+
+  geom_text(data = numbdiffs, aes(color = model, 
+                                  label = as.character(glue("+{n2}"))),
+            size = 3,hjust=0.5)
+
+print(resource_plot)
 CXM_simul <- function(df) {
   
   par(mfrow = c(1,1))
@@ -1124,20 +1086,6 @@ CXM_normal <- function(df) {
   CXM_norms_df$org_name <- factor(CXM_norms_df$org_name, levels = CXM_norms_df %>%
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
-  
-  CXM_norms_plot <- ggplot(CXM_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = CXM_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(CXM_norms_plot)
   
   assign("CXM_norms_summary",CXM_norms_summary,envir = .GlobalEnv)
   
@@ -1209,20 +1157,6 @@ CRO_normal <- function(df) {
   CRO_norms_df$org_name <- factor(CRO_norms_df$org_name, levels = CRO_norms_df %>%
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
-  
-  CRO_norms_plot <- ggplot(CRO_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = CRO_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(CRO_norms_plot)
   
   assign("CRO_norms_summary",CRO_norms_summary,envir = .GlobalEnv)
   
@@ -1300,20 +1234,6 @@ CAZ_normal <- function(df) {
   CAZ_norms_df$org_name <- factor(CAZ_norms_df$org_name, levels = CAZ_norms_df %>%
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
-  
-  CAZ_norms_plot <- ggplot(CAZ_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = CAZ_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(CAZ_norms_plot)
   
   assign("CAZ_norms_summary",CAZ_norms_summary,envir = .GlobalEnv)
   
@@ -1416,20 +1336,6 @@ FEP_normal <- function(df) {
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
   
-  FEP_norms_plot <- ggplot(FEP_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = FEP_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(FEP_norms_plot)
-  
   assign("FEP_norms_summary",FEP_norms_summary,envir = .GlobalEnv)
   
   df
@@ -1530,20 +1436,6 @@ MEM_normal <- function(df) {
   MEM_norms_df$org_name <- factor(MEM_norms_df$org_name, levels = MEM_norms_df %>%
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
-  
-  MEM_norms_plot <- ggplot(MEM_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = MEM_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(MEM_norms_plot)
   
   assign("MEM_norms_summary",MEM_norms_summary,envir = .GlobalEnv)
   
@@ -1646,20 +1538,6 @@ CIP_normal <- function(df) {
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
   
-  CIP_norms_plot <- ggplot(CIP_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = CIP_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(CIP_norms_plot)
-  
   assign("CIP_norms_summary",CIP_norms_summary,envir = .GlobalEnv)
   
   df
@@ -1725,20 +1603,6 @@ LVX_normal <- function(df) {
   LVX_norms_df$org_name <- factor(LVX_norms_df$org_name, levels = LVX_norms_df %>%
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
-  
-  LVX_norms_plot <- ggplot(LVX_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = LVX_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(LVX_norms_plot)
   
   assign("LVX_norms_summary",LVX_norms_summary,envir = .GlobalEnv)
   
@@ -1812,20 +1676,6 @@ ERY_normal <- function(df) {
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
   
-  ERY_norms_plot <- ggplot(ERY_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = ERY_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(ERY_norms_plot)
-  
   assign("ERY_norms_summary",ERY_norms_summary,envir = .GlobalEnv)
   
   df
@@ -1890,20 +1740,6 @@ CLI_normal <- function(df) {
   CLI_norms_df$org_name <- factor(CLI_norms_df$org_name, levels = CLI_norms_df %>%
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
-  
-  CLI_norms_plot <- ggplot(CLI_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = CLI_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(CLI_norms_plot)
   
   assign("CLI_norms_summary",CLI_norms_summary,envir = .GlobalEnv)
   
@@ -1972,20 +1808,6 @@ TCY_normal <- function(df) {
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
   
-  TCY_norms_plot <- ggplot(TCY_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = TCY_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(TCY_norms_plot)
-  
   assign("TCY_norms_summary",TCY_norms_summary,envir = .GlobalEnv)
   
   df
@@ -2046,20 +1868,6 @@ VAN_normal <- function(df) {
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
   
-  VAN_norms_plot <- ggplot(VAN_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = VAN_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(VAN_norms_plot)
-  
   assign("VAN_norms_summary",VAN_norms_summary,envir = .GlobalEnv)
   
   df
@@ -2118,20 +1926,6 @@ RIF_normal <- function(df) {
   RIF_norms_df$org_name <- factor(RIF_norms_df$org_name, levels = RIF_norms_df %>%
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
-  
-  RIF_norms_plot <- ggplot(RIF_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = RIF_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(RIF_norms_plot)
   
   assign("RIF_norms_summary",RIF_norms_summary,envir = .GlobalEnv)
   
@@ -2240,20 +2034,6 @@ GEN_normal <- function(df) {
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
   
-  GEN_norms_plot <- ggplot(GEN_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = GEN_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(GEN_norms_plot)
-  
   assign("GEN_norms_summary",GEN_norms_summary,envir = .GlobalEnv)
   
   df
@@ -2336,20 +2116,6 @@ AMK_normal <- function(df) {
   AMK_norms_df$org_name <- factor(AMK_norms_df$org_name, levels = AMK_norms_df %>%
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
-  
-  AMK_norms_plot <- ggplot(AMK_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = AMK_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(AMK_norms_plot)
   
   assign("AMK_norms_summary",AMK_norms_summary,envir = .GlobalEnv)
   
@@ -2452,20 +2218,6 @@ TOB_normal <- function(df) {
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
   
-  TOB_norms_plot <- ggplot(TOB_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = TOB_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(TOB_norms_plot)
-  
   assign("TOB_norms_summary",TOB_norms_summary,envir = .GlobalEnv)
   
   df
@@ -2554,20 +2306,6 @@ NIT_normal <- function(df) {
   NIT_norms_df$org_name <- factor(NIT_norms_df$org_name, levels = NIT_norms_df %>%
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
-  
-  NIT_norms_plot <- ggplot(NIT_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = NIT_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(NIT_norms_plot)
   
   assign("NIT_norms_summary",NIT_norms_summary,envir = .GlobalEnv)
   
@@ -2681,20 +2419,6 @@ SXT_normal <- function(df) {
   SXT_norms_df$org_name <- factor(SXT_norms_df$org_name, levels = SXT_norms_df %>%
                                     distinct(org_name) %>% unlist()) %>% 
     fct_rev()
-  
-  SXT_norms_plot <- ggplot(SXT_norms_df, aes(x=org_name,y=samples,fill=org_name))+
-    geom_boxplot(outlier.shape = NA) +
-    geom_point(data = SXT_norms_df %>% dplyr::filter(outlier), position = 'jitter',alpha=0.05) +
-    coord_flip() +
-    ggtitle(glue("Posterior Resistance Probability for Benzylpenicillin"))+
-    xlab("Organism Species/Group") +
-    ylab("Probability") +
-    ylim(0,1) +
-    scale_fill_brewer(palette = "Spectral") +
-    theme_classic() +
-    theme(legend.position = "none")
-  
-  print(SXT_norms_plot)
   
   assign("SXT_norms_summary",SXT_norms_summary,envir = .GlobalEnv)
   
