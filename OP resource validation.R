@@ -1,131 +1,131 @@
-#BEAR RESOURCE EFFICIENCY CROSS-VALIDATION
+#OBSERVED PREVALENCE RESOURCE EFFICIENCY CROSS-VALIDATION
 
-##BEAR resource efficiency runs for each agent
+##Run resource efficiency check for each agent (EOP)
 
-###Penicillin
-numbsim_PEN <- m_actual_intr %>% number_validate(
+###Benzylpenicillin
+numbnorm_PEN <- m_actual_intr %>% number_validate(
   "(Streptococcus pneumoniae|Staphylococcus aureus)",
-  PEN,"PEN",50,PEN_simul,"Benzylpenicillin",error_marg=0.1,starting_num = 2)
+  PEN,"PEN",50,PEN_normal,"Benzylpenicillin",error_marg=0.1,starting_num = 6)
 
 ###Ampicillin
-numbsim_AMP <- m_actual_intr %>% number_validate(
+numbnorm_AMP <- m_actual_intr %>% number_validate(
   "(Streptococcus pneumoniae|Escherichia coli|^Enterococcus$|Proteus mirabilis)",
-  AMP,"AMP",50,AMP_simul,"Ampicillin",error_marg=0.1,starting_num = 54)
+  AMP,"AMP",50,AMP_normal,"Ampicillin",error_marg=0.1,starting_num = 60)
 
 ###Oxacillin
-numbsim_OXA <- m_actual_intr %>% number_validate(
+numbnorm_OXA <- m_actual_intr %>% number_validate(
   "Staphylococcus aureus",
-  OXA,"OXA",50,OXA_simul,"Oxacillin",error_marg=0.1,starting_num = 63)
+  OXA,"OXA",50,OXA_normal,"Oxacillin",error_marg=0.1,starting_num = 66)
 
-###Ampicillin-sulbactam
-numbsim_SAM <- m_actual_intr %>% number_validate(
+###Ampicillin/sulbactam
+numbnorm_SAM <- m_actual_intr %>% number_validate(
   "(Escherichia coli|Klebsiella pneumoniae|Proteus mirabilis)",
-  SAM,"SAM",50,SAM_simul,"Ampicillin-sulbactam",error_marg=0.1,starting_num = 28)
+  SAM,"SAM",50,SAM_normal,"Ampicillin-sulbactam",error_marg=0.1,starting_num = 45)
 
-###Piperacillin-tazobactam
-numbsim_TZP <- m_actual_intr %>% number_validate(
+###Piperacillin/tazobactam
+numbnorm_TZP <- m_actual_intr %>% number_validate(
   "(Escherichia coli|Klebsiella|Proteus|Pseudomonas aeruginosa)",
-  TZP,"TZP",50,TZP_simul,"Piperacillin-tazobactam",error_marg=0.1,starting_num = 13)
+  TZP,"TZP",50,TZP_normal,"Piperacillin-tazobactam",error_marg=0.1,starting_num = 12)
 
 ###Cefazolin
-numbsim_CZO <- m_actual_intr %>% number_validate(
+numbnorm_CZO <- m_actual_intr %>% number_validate(
   "(Escherichia coli|Klebsiella pneumoniae|Proteus mirabilis)",
-  CZO,"CZO",50,CZO_simul,"Cefazolin",error_marg=0.1,starting_num = 26)
+  CZO,"CZO",50,CZO_normal,"Cefazolin",error_marg=0.1,starting_num = 34)
 
 ###Cefuroxime
-numbsim_CXM <- m_actual_intr %>% number_validate(
+numbnorm_CXM <- m_actual_intr %>% number_validate(
   "(Escherichia coli|Klebsiella pneumoniae|Proteus mirabilis)",
-  CXM,"CXM",50,CXM_simul,"Cefuroxime",error_marg=0.1,starting_num = 19)
+  CXM,"CXM",50,CXM_normal,"Cefuroxime",error_marg=0.1,starting_num = 20)
 
 ###Ceftriaxone
-numbsim_CRO <- m_actual_intr %>% number_validate(
+numbnorm_CRO <- m_actual_intr %>% number_validate(
   "(Escherichia coli|Klebsiella pneumoniae|Proteus mirabilis)",
-  CRO,"CRO",50,CRO_simul,"Ceftriaxone",error_marg=0.1,starting_num = 24)
+  CRO,"CRO",50,CRO_normal,"Ceftriaxone",error_marg=0.1,starting_num = 25)
 
 ###Ceftazidime
-numbsim_CAZ <- m_actual_intr %>% number_validate(
+numbnorm_CAZ <- m_actual_intr %>% number_validate(
   "(Escherichia coli|Klebsiella pneumoniae|Proteus mirabilis|Pseudomonas aeruginosa)",
-  CAZ,"CAZ",50,CAZ_simul,"Ceftazidime",error_marg=0.1,starting_num = 12)
+  CAZ,"CAZ",50,CAZ_normal,"Ceftazidime",error_marg=0.1,starting_num = 13)
 
 ###Cefepime
-numbsim_FEP <- m_actual_intr %>% number_validate(
+numbnorm_FEP <- m_actual_intr %>% number_validate(
   "(Citrobacter freundii|Enterobacter cloacae|Escherichia coli|Klebsiella pneumoniae|Morganella morganii|Proteus mirabilis|Pseudomonas aeruginosa|Serratia marcescens)",
-  FEP,"FEP",50,FEP_simul,"Cefepime",error_marg=0.1,starting_num = 17)
+  FEP,"FEP",50,FEP_normal,"Cefepime",error_marg=0.1,starting_num = 15)
 
 ###Meropenem
-numbsim_MEM <- m_actual_intr %>% number_validate(
+numbnorm_MEM <- m_actual_intr %>% number_validate(
   "(Citrobacter freundii|Enterobacter cloacae|Escherichia coli|Klebsiella pneumoniae|Morganella morganii|Proteus mirabilis|Pseudomonas aeruginosa|Serratia marcescens)",
-  MEM,"MEM",50,MEM_simul,"Meropenem",error_marg=0.1,starting_num = 8)
+  MEM,"MEM",50,MEM_normal,"Meropenem",error_marg=0.1,starting_num = 3)
 
 ###Ciprofloxacin
-numbsim_CIP <- m_actual_intr %>% number_validate(
+numbnorm_CIP <- m_actual_intr %>% number_validate(
   "(Citrobacter freundii|Enterobacter cloacae|Escherichia coli|Klebsiella pneumoniae|Morganella morganii|Proteus mirabilis|Pseudomonas aeruginosa|Serratia marcescens)",
-  CIP,"CIP",50,CIP_simul,"Ciprofloxacin",error_marg=0.1,starting_num = 15)
+  CIP,"CIP",50,CIP_normal,"Ciprofloxacin",error_marg=0.1,starting_num = 24)
 
 ###Levofloxacin
-numbsim_LVX <- m_actual_intr %>% number_validate(
+numbnorm_LVX <- m_actual_intr %>% number_validate(
   "(Streptococcus pneumoniae|Staphylococcus aureus)",
-  LVX,"LVX",50,LVX_simul,"Levofloxacin",error_marg=0.1,starting_num = 65)
+  LVX,"LVX",50,LVX_normal,"Levofloxacin",error_marg=0.1,starting_num = 84)
 
 ###Erythromycin
-numbsim_ERY <- m_actual_intr %>% number_validate(
+numbnorm_ERY <- m_actual_intr %>% number_validate(
   "(Streptococcus pneumoniae|Streptococcus Group B|Staphylococcus aureus)",
-  ERY,"ERY",50,ERY_simul,"Erythromycin",error_marg=0.1,starting_num = 80)
+  ERY,"ERY",50,ERY_normal,"Erythromycin",error_marg=0.1,starting_num = 92)
 
 ###Clindamycin
-numbsim_CLI <- m_actual_intr %>% number_validate(
+numbnorm_CLI <- m_actual_intr %>% number_validate(
   "(Streptococcus Group B|Staphylococcus aureus)",
-  CLI,"CLI",50,CLI_simul,"Clindamycin",error_marg=0.1,starting_num = 65)
+  CLI,"CLI",50,CLI_normal,"Clindamycin",error_marg=0.1,starting_num = 99)
 
-###Tetracycline
-numbsim_TCY <- m_actual_intr %>% number_validate(
+###Doxycycline/tetracycline
+numbnorm_TCY <- m_actual_intr %>% number_validate(
   "(Streptococcus pneumoniae|Staphylococcus aureus)",
-  TCY,"TCY",50,TCY_simul,"Tetracycline",error_marg=0.1,starting_num = 33)
+  TCY,"TCY",50,TCY_normal,"Tetracycline",error_marg=0.1,starting_num = 32)
 
 ###Vancomycin
-numbsim_VAN <- m_actual_intr %>% number_validate(
+numbnorm_VAN <- m_actual_intr %>% number_validate(
   "^Enterococcus$",
-  VAN,"VAN",50,VAN_simul,"Vancomycin",error_marg=0.1,starting_num = 49)
+  VAN,"VAN",50,VAN_normal,"Vancomycin",error_marg=0.1,starting_num = 79)
 
 ###Rifampicin
-numbsim_RIF <- m_actual_intr %>% number_validate(
+numbnorm_RIF <- m_actual_intr %>% number_validate(
   "Staphylococcus aureus",
-  RIF,"RIF",50,RIF_simul,"Rifampicin",error_marg=0.1,starting_num = 22)
+  RIF,"RIF",50,RIF_normal,"Rifampicin",error_marg=0.1,starting_num = 24)
 
 ###Gentamicin
-numbsim_GEN <- m_actual_intr %>% number_validate(
+numbnorm_GEN <- m_actual_intr %>% number_validate(
   "(Citrobacter freundii|Enterobacter cloacae|Escherichia coli|Klebsiella pneumoniae|Morganella morganii|Proteus mirabilis|Pseudomonas aeruginosa|Serratia marcescens|Staphylococcus aureus)",
-  GEN,"GEN",50,GEN_simul,"Gentamicin",error_marg=0.1,starting_num = 13)
+  GEN,"GEN",50,GEN_normal,"Gentamicin",error_marg=0.1,starting_num = 12)
 
 ###Amikacin
-numbsim_AMK <- m_actual_intr %>% number_validate(
+numbnorm_AMK <- m_actual_intr %>% number_validate(
   "(Enterobacter cloacae|Escherichia coli|Klebsiella pneumoniae|Proteus mirabilis|Pseudomonas aeruginosa)",
-  AMK,"AMK",50,AMK_simul,"Amikacin",error_marg=0.1,starting_num = 12)
+  AMK,"AMK",50,AMK_normal,"Amikacin",error_marg=0.1,starting_num = 11)
 
 ###Tobramycin
-numbsim_TOB <- m_actual_intr %>% number_validate(
+numbnorm_TOB <- m_actual_intr %>% number_validate(
   "(Citrobacter freundii|Enterobacter cloacae|Escherichia coli|Klebsiella pneumoniae|Morganella morganii|Proteus mirabilis|Pseudomonas aeruginosa|Serratia marcescens)",
-  TOB,"TOB",50,TOB_simul,"Tobramycin",error_marg=0.1,starting_num = 12)
+  TOB,"TOB",50,TOB_normal,"Tobramycin",error_marg=0.1,starting_num = 7)
 
 ###Nitrofurantoin
-numbsim_NIT <- m_actual_intr %>% number_validate(
+numbnorm_NIT <- m_actual_intr %>% number_validate(
   "(Citrobacter freundii|Enterobacter cloacae|^Enterococcus$|Escherichia coli|Klebsiella pneumoniae|Staphylococcus aureus)",
-  NIT,"NIT",50,NIT_simul,"Nitrofurantoin",error_marg=0.1,starting_num = 9)
+  NIT,"NIT",50,NIT_normal,"Nitrofurantoin",error_marg=0.1,starting_num = 10)
 
 ###Co-trimoxazole
-numbsim_SXT <- m_actual_intr %>% number_validate(
+numbnorm_SXT <- m_actual_intr %>% number_validate(
   "(Citrobacter freundii|Enterobacter cloacae|Escherichia coli|Klebsiella pneumoniae|Morganella morganii|Proteus mirabilis|Serratia marcescens|Stenotrophomonas maltophilia|Streptococcus pneumoniae|Staphylococcus aureus)",
-  SXT,"SXT",50,SXT_simul,"Trimethoprim-sulfamethoxazole",error_marg=0.1,starting_num = 13)
+  SXT,"SXT",50,SXT_normal,"Trimethoprim-sulfamethoxazole",error_marg=0.1,starting_num = 19)
 
-##Bind into summary dataframe
+##Compile summary dataframe
 
-numbsims <- data.frame(rbind(numbsim_PEN,numbsim_AMP,numbsim_OXA,
-                             numbsim_SAM,numbsim_TZP,numbsim_CZO,
-                             numbsim_CXM,numbsim_CRO,numbsim_CAZ,
-                             numbsim_FEP,numbsim_MEM,numbsim_CIP,
-                             numbsim_LVX,numbsim_ERY,numbsim_CLI,
-                             numbsim_TCY,numbsim_VAN,numbsim_RIF,
-                             numbsim_GEN,numbsim_AMK,numbsim_TOB,
-                             numbsim_NIT,numbsim_SXT))
+numbnorms <- data.frame(rbind(numbnorm_PEN,numbnorm_AMP,numbnorm_OXA,
+                              numbnorm_SAM,numbnorm_TZP,numbnorm_CZO,
+                              numbnorm_CXM,numbnorm_CRO,numbnorm_CAZ,
+                              numbnorm_FEP,numbnorm_MEM,numbnorm_CIP,
+                              numbnorm_LVX,numbnorm_ERY,numbnorm_CLI,
+                              numbnorm_TCY,numbnorm_VAN,numbnorm_RIF,
+                              numbnorm_GEN,numbnorm_AMK,numbnorm_TOB,
+                              numbnorm_NIT,numbnorm_SXT))
 
-write_csv(numbsims,"BEAR_numbsims.csv")
+write_csv(numbnorms,"BEAR_numbnorms.csv")
