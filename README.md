@@ -10,3 +10,5 @@ The code contains randomisation elements, and a seed was not set when the origin
 4. BEAR resource validation.R
 5. OP resource validation.R
 6. Plots.R
+
+To reduce computation time in the resource analyses (*BEAR resource validation.R* and *OP resource validation.R*) when reproducing the code, starting numbers (argument *startingnum* in function *number_validate()*) of samples informing the likelihood have been started at the values from the manuscript results. To reproduce the time taken to complete the full analysis, these numbers should be changed to 2.
