@@ -1,5 +1,15 @@
 #BAYESIAN ESTIMATION OF ANTIMICROBIAL RESISTANCE (BEAR) - PRECISION RUN
 
+##Read-in and cleaning
+m_actual_intr <- micro_clean(
+  file_location="#FILEPATH#",
+  microbiologyevents_filename = "microbiologyevents.csv")
+
+m_actual_intr <- m_actual_intr %>% intr_mic()
+write_csv(m_actual_intr,"m_actual_intr.csv")
+
+set.seed(123)
+
 ##Set up df to record aborted runs
 
 missings <- data.frame(matrix(ncol=2,nrow=0))
@@ -172,3 +182,5 @@ sims <- sims %>% relocate(Antimicrobial, .before="Accuracy (mean)")
 sim_missings <- missings %>%                                                                       #Complete check for failed iterations
   count(Antimicrobial,Organism) %>% 
   rename(n_missing_iterations = n)
+
+write_csv(sims,"BEAR_sims.csv")
