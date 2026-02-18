@@ -12,3 +12,7 @@ The code contains randomisation elements, and a seed was not set when the origin
 6. Plots.R
 
 To reduce computation time in the resource analyses (*BEAR resource validation.R* and *OP resource validation.R*) when reproducing the code, starting numbers (argument *startingnum* in function *number_validate()*) of samples informing the likelihood have been started at the values from the manuscript results. To reproduce the time taken to complete the full analysis, these numbers should be changed to 2.
+
+## Notes
+
+The resource validation scripts may sporadically throw non-reproducible errors. If such an error occurs, re-running the code from the block that generated the error will usually resolve the problem. Examples of such errors that have been observed are: "Error in 'filter()': Can't specify an argument named 'by' in this verb. Did you mean to use '.by' instead?;"Error in 'arg_match()': ! 'arg' must be a symbol, not a function."; "Error in UseMethod('depth') :  no applicable method for 'depth' applied to an object of class 'NULL'").
