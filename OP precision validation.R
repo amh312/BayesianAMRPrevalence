@@ -171,3 +171,5 @@ norms <- norms %>% relocate(Antimicrobial, .before="Accuracy (mean)")
 norm_missings <- missings %>%                                                                       #Complete check for failed iterations
   count(Antimicrobial,Organism) %>% 
   rename(n_missing_iterations = n)
+
+write_csv(norms,"BEAR_norms.csv")
