@@ -68,6 +68,9 @@ print(valid_norms_plot)
 ##Precision boxplot (BEAR)
 
 ###Compose dataframe
+SXT_validation <- SXT_validation %>% mutate(
+  Antimicrobial="Co-trimoxazole"
+)
 valid <- data.frame(rbind(PEN_validation,AMP_validation,OXA_validation,
                           SAM_validation,TZP_validation,CZO_validation,
                           CXM_validation,CRO_validation,CAZ_validation,
@@ -151,6 +154,11 @@ numbdiffs <- numbdiffs %>% mutate(n = case_when(
   model=="BEAR"~BEAR+5,
   model=="EOP"~EOP+5
 ))
+numbdiffs <- numbdiffs %>% mutate(
+  model=case_when(is.na(model)~"BEAR",
+                  TRUE~model)
+)
+numbdiffs
 
 ###Cleveland dotplot
 resource_plot <- ggplot(numbs, aes(x=Antimicrobial,y=n)) +
