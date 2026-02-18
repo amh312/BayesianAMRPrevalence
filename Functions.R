@@ -4,31 +4,25 @@
 library("tidyverse")
 library("MLmetrics")
 library("ROCR")
-library("mlmRev")
 library("lme4")
 library("DescTools")
 library("posterior")
-library("rethinking")
 library("AMR")
 library("caret")
 library("data.table")
 library("devtools")
-library("amrabxlookup")
 library("corrplot")
 library("bayesplot")
-library("dbarts")
 library("glue")
 library("ggridges")
 library("tidymodels")
 library("pak")
 library("devtools")
-library("truncnorm")
-library("missMethods")
-library("dichromat")
-library("RColorBrewer")
+library("cmdstanr")
+library("rethinking")
 
 ##Setup
-setwd("/Users/alexhoward/Documents/GitHub/MIMIC-IV")
+setwd("#FILEPATH#")
 options(error=NULL)
 
 ##Functions
@@ -48,7 +42,7 @@ micro_clean <- function(file_location,microbiologyevents_filename) {
   }
   
   #read in csv
-  df <- read_in("microbiologyevents3.csv")
+  df <- read_in(microbiologyevents_filename)
   
   df <- df %>% mutate(org_name = str_remove(org_name,"POSITIVE FOR"),#---------------------------------------------------Cleaning organism names
                       org_name = str_remove(org_name,"PRESUMPTIVELY"),
@@ -86,7 +80,7 @@ micro_clean <- function(file_location,microbiologyevents_filename) {
     filter(!grepl("(CANCELLED|VIRUS|SIMPLEX|PARAINFLUENZA|INFLUENZA A|INFLUENZA B|TICK|AFB GROWN|GRAM VARIABLE RODS|HYMENOLEPIS)",org_name)) %>% 
     mutate(ab_name=AMR::as.ab(ab_name)) %>%#-------------------------------------------------------------------------------AMR package parsing of antimicrobial and organism names
     mutate(org_name=AMR::as.mo(org_name)) %>% 
-    amrabxlookup::transpose_microbioevents(
+    MIMER::transpose_microbioevents(
       key_columns = c('subject_id','micro_specimen_id','isolate_num','org_name','ab_itemid','test_name','test_seq'),#------Transpose AST results to columns
       required_columns =c('subject_id','chartdate',"hadm_id","order_provider_id",
                           "charttime","micro_specimen_id","spec_itemid","spec_type_desc",
@@ -304,8 +298,8 @@ res_sim <- function(df,col,condition,col2,condition2,antibiotic,alpha_prior,beta
               
               #theme and blank axes
               theme(axis.title.y=element_blank(),
-              axis.text.y=element_blank(),
-              axis.ticks.y=element_blank()) +
+                    axis.text.y=element_blank(),
+                    axis.ticks.y=element_blank()) +
               
               #line for probability distribution
               geom_line(size=.5) +
